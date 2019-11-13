@@ -4,7 +4,7 @@ class HomeworksController < ApplicationController
   # GET /homeworks
   def index
     render json: Homework.all.to_json( 
-    only:[:content, :date, :completion], 
+    only:[:content, :date, :completion, :id], 
     include: {subject: {only:[:id, :name]}}
     )
   end
@@ -21,7 +21,7 @@ class HomeworksController < ApplicationController
 
     if homework.save
       render json: homework.to_json(
-        only:[ :id, :content, :date, :completion],
+        only:[:content, :date, :completion],
         include:{ subject: {only: [:name, :id]}}
       )
     else 
@@ -51,7 +51,7 @@ class HomeworksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def homework_params
-      params.require(:homework).permit(:content, :date, :completion)
+      params.require(:homework).permit(:content, :date, :completion, :id)
     end
     
     def subject_params

@@ -7,12 +7,12 @@ const addHomework = homework => {
     homeworkContainer.innerHTML += `
     <div id="${homework.id}" class="card">
     <div class="card-content">
-    <span class="card-title">${homework.subject.name}</span>
-    <p>Content: ${homework.content} </p>
-    <p>Due: ${homework.date}</p>
-    <p>Complete? <input id="complete" type="checkbox" ${checked}  /></p>
-    </div>
-    <button onclick="deleteHomework(${homework.id})">Delete</button>
+        <h2>${homework.subject.name}</h2>
+        <p>Content: ${homework.content} </p>
+        <p>Due: ${homework.date}</p>
+        <p>Complete? <input id="complete" type="checkbox" ${checked}  /></p>
+        </div>
+        <button onclick="deleteHomework(${homework.id})">Delete</button>
     </div>
     `
 }
