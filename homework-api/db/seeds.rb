@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+geography = Subject.create(name: "Geography")
+
+geography.homeworks.create(content: "Prepare essay on Mt. Etna", date: "2019/10/12", completion: false)
