@@ -22,7 +22,7 @@ const loadHomeworks = params => {
         homeworkContainer.innerHTML += `
         <div id="${homework.id}" class="card">
         <div class="card-content">
-        <span class="card-title">${homework.subject}</span>
+        <span class="card-title">${homework.subject.name}</span>
         <p>Content: ${homework.content} </p>
         <p>Due: ${homework.date}</p>
         <p>Complete? <input type="checkbox" </p>
@@ -55,9 +55,9 @@ const handleSubmission = e => {
     e.preventDefault()
     const homework = {
         homework: {
-        content: e.target.homework.value,
-        date: e.target.date.value,
-        id: e.target.id.value
+            content: e.target.homework.value,
+            date: e.target.date.value,
+            id: e.target.id.value
         },
         subject: {
             name: e.target.subject.value
