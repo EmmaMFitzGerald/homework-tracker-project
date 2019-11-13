@@ -39,6 +39,16 @@ const loadHomeworks = params => {
     })
 }
 
+function deleteHomework(id) {
+    document.getElementById(`${id}`).remove()
+    fetch(`http://localhost:3000/homeworks/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type' : 'application/json'
+        }
+    })
+}
+
 const handleSubmission = e => {
     e.preventDefault()
     const homework = {
