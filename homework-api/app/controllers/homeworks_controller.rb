@@ -3,9 +3,10 @@ class HomeworksController < ApplicationController
 
   # GET /homeworks
   def index
-    @homeworks = Homework.all
-
-    render json: @homeworks
+    render json: Homework.all.to_json( 
+    only:[:content, :date, :completion], 
+    include: {subject: {only:[:id, :name]}}
+    )
   end
 
   # GET /homeworks/1
@@ -15,12 +16,16 @@ class HomeworksController < ApplicationController
 
   # POST /homeworks
   def create
-    @homework = Homework.new(homework_params)
+    subject = Subject.find_or_create_by(subject_params)
+    homework = subject.homeworks.build(homework_params)
 
-    if @homework.save
-      render json: @homework, status: :created, location: @homework
-    else
-      render json: @homework.errors, status: :unprocessable_entity
+    if homework.save
+      render json: homework.to_json(
+        only:[:content, :date, :completion, :id],
+        include:{ subject: {only: [:name, :id]}}
+      )
+    else 
+      render json: {error: homework.errors.full_messages}
     end
   end
 
@@ -46,6 +51,6 @@ class HomeworksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def homework_params
-      params.require(:homework).permit(:content, :due_date, :compleytion)
+      params.require(:homework).permit(:content, :date, :completion)
     end
 end

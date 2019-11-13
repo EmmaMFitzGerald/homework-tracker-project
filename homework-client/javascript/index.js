@@ -1,14 +1,16 @@
 let homeworks = []
 const homeworkContainer = document.querySelector(".homework-list")
 
+
 const addHomework = homework => {
+    const checked =  this.completion ? 'checked'  : ''
     homeworkContainer.innerHTML += `
     <div id="${homework.id}" class="card">
     <div class="card-content">
-    <span class="card-title">${homework.subject}</span>
+    <span class="card-title">${homework.subject.name}</span>
     <p>Content: ${homework.content} </p>
-    <p>Due: ${homework.due_date}</p>
-    <p>Complete? ${homework.completion}</p>
+    <p>Due: ${homework.date}</p>
+    <p>Complete? <input id="complete" type="checkbox" ${checked}  /></p>
     </div>
     <button onclick="deleteHomework(${homework.id})">Delete</button>
     </div>
@@ -23,7 +25,7 @@ const loadHomeworks = params => {
         <span class="card-title">${homework.subject}</span>
         <p>Content: ${homework.content} </p>
         <p>Due: ${homework.date}</p>
-        <p>Complete? ${homework.completion}</p>
+        <p>Complete? <input type="checkbox" </p>
         </div>
         <button onclick="deleteHomework(${homework.id})">Delete</button>
         </div>
@@ -52,10 +54,14 @@ function deleteHomework(id) {
 const handleSubmission = e => {
     e.preventDefault()
     const homework = {
-        subject: e.target.subject.value,
+        homework: {
         content: e.target.homework.value,
         date: e.target.date.value,
         id: e.target.id.value
+        },
+        subject: {
+            name: e.target.subject.value
+        }
     }
     fetch('http://localhost:3000/homeworks',
     {
