@@ -10,33 +10,11 @@ html {
 }
 
 .homework-header {
-    text-transform: uppercase;
     font-size: 3.5rem;
-    letter-spacing: 3px;
     margin-right: -3px;
     margin-bottom: 5rem;
     text-align: center;
-    color: 
 }
-
-/* .card-wrapper{
-    display: flex;
-    flex-wrap: wrap;
-    align-items:center;
-    align-content: center;
-    flex-direction: column;
-    justify-content: space-between;
-} */
-
-/* .card {
-    /* width: 32rem;
-    background-color: white ;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; */
-    /* flex: 0 1 calc(25% - 1em); */
-
 
 .cards {
     display: flex;
@@ -50,3 +28,7 @@ html {
     border: 1px solid #ccc;
     box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
   } 
+
+  
+
+  

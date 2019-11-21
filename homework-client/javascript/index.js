@@ -1,30 +1,42 @@
 let homeworks = []
 const homeworkContainer = document.querySelector(".homework-list")
+class Homework {
+    constructor(data){
+        this.id = data.id
+        this.date = data.date
+        this.subject = data.subject
+        this.content = data.content
+        this.checked = data.completion ? 'checked'  : ''
+    }
+
+    render() {
+        return `
+        <div id="${this.id}" class="card">
+            <div class="card-content">
+                <h2>${this.subject.name}</h2>
+                <p>${this.content} </p>
+                <p>Due: ${this.date}</p>
+                <p>Complete? <input id="complete-${this.id}" onclick="completedHomework(${this.id})" type="checkbox" ${this.checked}/></p>
+            </div>
+            <button onclick="deleteHomework(${this.id})">Delete</button>
+        </div>
+        `
+    }
+
+}
 
 const addHomework = homework => {
-    const checked =  homework.completion ? 'checked'  : ''
-    homeworkContainer.innerHTML += `
-    <div class="cards">
-        <div id="${homework.id}" class="card">
-            <div class="card-content">
-                <h2>${homework.subject.name}</h2>
-                <p>${homework.content} </p>
-                <p>Due: ${homework.date}</p>
-                <p>Complete? <input id="complete-${homework.id}" onclick="completedHomework(${homework.id})" type="checkbox" ${checked}/></p>
-            </div>
-            <button onclick="deleteHomework(${homework.id})">Delete</button>
-        </div>
-    </div>
-    `
+    homeworkContainer.innerHTML += homework.render()
 }
 
 function completedHomework(id) {
-    const checkBox = document.querySelector(`#complete-${id}`)
-    const data = {
+    const checkBox = document.querySelector(`#complete-${id}`);
+        const data = {
         homework: {
             completion: checkBox.checked
         }
     }
+
     fetch(`http://localhost:3000/homeworks/${id}`, {
         method: 'PATCH',
         headers: {
@@ -35,25 +47,11 @@ function completedHomework(id) {
 }
 
 const loadHomeworks = params => {
-    // homeworks.forEach((homework) => {
-    //     console.log(homework)
-    //     const checked =  homework.completion ? 'checked'  : ''
-    //     homeworkContainer.innerHTML += `
-    //     <div id="${homework.id}" class="card">
-    //     <div class="card-content">
-    //     <span class="card-title">${homework.subject.name}</span>
-    //     <p>Content: ${homework.content} </p>
-    //     <p>Due: ${homework.date}</p>
-    //     <p>Complete? <input type="checkbox" ${checked}/></p>
-    //     </div>
-    //     <button onclick="deleteHomework(${homework.id})">Delete</button>
-    //     </div>
-    //     `
-    // })
     data = fetch('http://localhost:3000/homeworks').then(response => {
         homeworks = response.json()
         homeworks.then(data => {
-            data.forEach(homework => {
+            data.forEach(homeworkData => {
+                const homework = new Homework(homeworkData)
                 addHomework(homework)
             })
         })
@@ -93,7 +91,8 @@ const handleSubmission = e => {
         return res.json()
     })
         .then(data => {
-        addHomework(data)
+        const homework = new Homework(data)
+        addHomework(homework)
         e.target.reset()
     })
 }
@@ -103,4 +102,5 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#homework-form').addEventListener('submit', handleSubmission)
     loadHomeworks()
 })
+
 
